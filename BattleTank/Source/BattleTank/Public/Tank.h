@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -17,9 +18,16 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+
 
 public:	
 	// Called every frame
