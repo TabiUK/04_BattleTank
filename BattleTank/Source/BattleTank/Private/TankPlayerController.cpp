@@ -19,6 +19,14 @@ void ATankPlayerController::BeginPlay()
 }
 
 
+// Called every frame
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	// aim towards crosshair()
+
+}
+
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
