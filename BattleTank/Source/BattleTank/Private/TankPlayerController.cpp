@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Components/PrimitiveComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Engine/World.h"
 
 
 void ATankPlayerController::BeginPlay()
@@ -26,9 +29,17 @@ void ATankPlayerController::Tick(float DeltaTime)
 }
 
 
-ATank* ATankPlayerController::GetControlledTank() const
+void ATankPlayerController::AimTowardsCrosshair()
 {
-	return Cast<ATank>(GetPawn());
+	auto ControlledTank = GetControlledTank();
+	if (ControlledTank == nullptr) return;
+
+	FVector HitLocation = FVector(.0f); // OUT Praramater;
+	if (GetSightRayHitLocation(HitLocation)) {
+
+		ControlledTank->AimAt(HitLocation);
+	}
+	return;
 }
 
 
@@ -42,12 +53,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 
-	// "De-project" the screen position of the crosshair to a world direction
-	FVector CameraWorldLocation = FVector(.0f); // ingnore camera's world location
-	FVector WorldDirection = FVector(.0f);
-	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y,
-		CameraWorldLocation, WorldDirection)) {
-		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *WorldDirection.ToString());
+	FVector LookDirection = FVector(.0f);
+	if (GetLookDirection(ScreenLocation, LookDirection)) {
+		// Line-trace along that LookDirection, and see what we hit (up to max range)
+		return (GetLookVectorHitLocation(LookDirection, OutHitLocation));
 	}
 
 
@@ -56,14 +65,37 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 }
 
 
-void ATankPlayerController::AimTowardsCrosshair()
+// "De-project" the screen position of the crosshair to a world direction
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
-	if (GetControlledTank() == nullptr) return;
+	FVector CameraWorldLocation = FVector(.0f); // ingnore camera's world location
+	LookDirection = FVector(.0f);
+	return (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y,
+		CameraWorldLocation, LookDirection));
+}
 
-	FVector HitLocation = FVector(.0f); // OUT Praramater;
-	if (GetSightRayHitLocation(HitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
-		// TODO aim at point
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	/// Line-trace (AKA ray-cast) out to reach distance
+	FHitResult HitResult = FHitResult();
+	HitLocation = FVector(.0f);
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility)) {
+		HitLocation = HitResult.Location;
+		return true;
 	}
-	return;
+	return false;
+}
+
+
+ATank* ATankPlayerController::GetControlledTank() const
+{
+	return Cast<ATank>(GetPawn());
 }
