@@ -10,12 +10,12 @@ void ATankPlayerController::BeginPlay()
 	auto ControlledTank = GetControlledTank();
 	if (ControlledTank == nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No controlling tank found"));
+		UE_LOG(LogTemp, Warning, TEXT("No PlayerContoller controlling tank found"));
 	} else {
-		UE_LOG(LogTemp, Warning, TEXT("Tank %s being controlled"), *ControlledTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("PlayerContoller Tank %s being controlled"), *ControlledTank->GetName());
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("PlayerContoller Begin Play"));
+	//UE_LOG(LogTemp, Warning, TEXT("PlayerContoller Begin Play"));
 }
 
 
