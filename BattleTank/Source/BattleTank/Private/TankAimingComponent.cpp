@@ -34,14 +34,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 {
-	auto OurTankName = GetOwner()->GetName();
-	auto BarrelLocation = Barrel->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("%s Aim At %s from %s"), *OurTankName,
-		*HitLocation.ToString(),
-		*BarrelLocation.ToString()
-		);
+	if (Barrel == nullptr) return;
+
+	FVector OutLauchVelocity = FVector(.0);
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LauchSpeed);
 }
 
 

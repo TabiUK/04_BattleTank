@@ -16,6 +16,13 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
@@ -27,15 +34,9 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
+private:
 
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
+	UPROPERTY(EditAnywhere, Category = Firing)
+   float LauchSpeed = 1000000; // TODO Find sensible starting value of 1000 m/s
 	
 };
