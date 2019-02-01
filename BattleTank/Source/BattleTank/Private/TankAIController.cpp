@@ -2,7 +2,8 @@
 
 #include "TankAIController.h"
 #include "Engine/World.h"
-
+#include "CoreMinimal.h"
+#include "Tank.h"
 
 
 void ATankAIController::BeginPlay()

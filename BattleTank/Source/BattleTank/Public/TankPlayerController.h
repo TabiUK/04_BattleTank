@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
+
+class ATank;
 
 /**
  * 
@@ -34,7 +34,7 @@ private:
 	float CrosshairXLocation = 0.5f;
 
 	UPROPERTY(EditAnywhere)
-	float CrosshairYLocation = 0.33333f;
+	float CrosshairYLocation = 0.3333f;
 
 	UPROPERTY(EditAnywhere)
 	float LineTraceRange = 1000000.0f; // Centimeters 

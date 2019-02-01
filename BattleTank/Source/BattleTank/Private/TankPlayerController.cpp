@@ -4,7 +4,8 @@
 #include "Components/PrimitiveComponent.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Engine/World.h"
-
+#include "CoreMinimal.h"
+#include "Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
