@@ -41,10 +41,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 		false,
 		0,
 		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace,
-		FCollisionResponseParams::DefaultResponseParam,
-		TArray<AActor*>(),
-		true //debug 
+		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 
 
@@ -52,12 +49,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 		auto AimDirection = OutLauchVelocity.GetSafeNormal(); // unit vector
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
-		//auto Time = GetWorld()->GetTimeSeconds();
-		//UE_LOG(LogTemp, Warning, TEXT("%f: aim solve found"), Time);
-	} else {
-		//auto Time = GetWorld()->GetTimeSeconds();
-		//UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
-
 	}
 }
 
