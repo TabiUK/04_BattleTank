@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "RProjectile.generated.h"
 
+class UProjectileMovementComponent;
+
 UCLASS()
 class BATTLETANK_API ARProjectile : public AActor
 {
@@ -14,15 +16,17 @@ class BATTLETANK_API ARProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ARProjectile();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	void LaunchProjectile(float speed);
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	
+private:
+	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;	
 	
 };
