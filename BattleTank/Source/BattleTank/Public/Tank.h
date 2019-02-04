@@ -41,13 +41,20 @@ protected:
 
 private:
 
-   UPROPERTY(EditAnywhere, Category = Firing)
-   float LauchSpeed = 4000.0f; // 4000 m/s
-
-   UPROPERTY(EditAnywhere, Category = Setup)
+   UPROPERTY(EditDefaultsOnly, Category = Setup)
    TSubclassOf<ARProjectile> ProjectileBlueprint; // see https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
 
+   UPROPERTY(EditDefaultsOnly, Category = Firing)
+   float LauchSpeed = 4000.0f; // 4000 m/s
+
+
+   UPROPERTY(EditDefaultsOnly, Category = Firing)
+   float ReloadTimeInSceonds = 3.0f;
+
+ 
    // Local barrel refence for spawning projectile
    UTankBarrel* Barrel = nullptr;
-	
+
+   double LastFireTime = 0;
+
 };

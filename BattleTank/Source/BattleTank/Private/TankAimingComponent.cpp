@@ -25,6 +25,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 {
 	if (Barrel == nullptr) return;
+	if (Turret == nullptr) return;
 
 	FVector OutLauchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -47,7 +48,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 
 	if (bHaveAimSolution) {
 		auto AimDirection = OutLauchVelocity.GetSafeNormal(); // unit vector
-		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
 	}
 }
