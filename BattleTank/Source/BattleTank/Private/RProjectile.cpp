@@ -32,8 +32,6 @@ void ARProjectile::Tick(float DeltaTime)
 
 void ARProjectile::LaunchProjectile(float speed)
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: projectile Fires at: %f"), Time, speed);
 	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * speed);
 	ProjectileMovementComponent->Activate();
 }
