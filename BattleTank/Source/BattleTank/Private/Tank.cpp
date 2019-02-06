@@ -42,7 +42,6 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
-	if (BarrelToSet == nullptr) return;
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 	Barrel = BarrelToSet;
 }
@@ -50,7 +49,6 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
-	if (TurretToSet == nullptr) return;
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
