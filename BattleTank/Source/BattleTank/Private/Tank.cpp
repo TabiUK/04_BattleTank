@@ -17,7 +17,6 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
@@ -43,6 +42,7 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
+	if (BarrelToSet == nullptr) return;
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 	Barrel = BarrelToSet;
 }
@@ -50,6 +50,7 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
+	if (TurretToSet == nullptr) return;
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 

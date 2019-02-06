@@ -24,8 +24,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 {
-	if (Barrel == nullptr) return;
-	if (Turret == nullptr) return;
+	if (Barrel == nullptr || Turret == nullptr) return;
 
 	FVector OutLauchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -55,6 +54,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (Barrel == nullptr || Turret == nullptr) return;
 
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
