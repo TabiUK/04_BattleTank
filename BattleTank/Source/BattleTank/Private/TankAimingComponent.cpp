@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStaticsTypes.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "RProjectile.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 
@@ -20,6 +21,13 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
+}
+
+
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
 }
 
 
@@ -67,8 +75,22 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 }
 
 
-void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+void UTankAimingComponent::Fire()
 {
-	Barrel = BarrelToSet;
-	Turret = TurretToSet;
+
+	if (!ensure(Barrel) || !ensure(ProjectileBlueprint)) return;
+
+	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSceonds;
+	if (!isReloaded) return;
+
+	auto Projectile = GetWorld()->SpawnActor<ARProjectile>(
+		ProjectileBlueprint,
+		Barrel->GetSocketLocation(FName("Projectile")),
+		Barrel->GetSocketRotation(FName("Projectile"))
+		);
+
+	if (!ensure(Projectile)) return;
+
+	Projectile->LaunchProjectile(LauchSpeed);
+	LastFireTime = GetWorld()->GetTimeSeconds();
 }
