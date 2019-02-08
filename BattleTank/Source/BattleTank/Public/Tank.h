@@ -34,6 +34,7 @@ private:
    UPROPERTY(EditDefaultsOnly, Category = "Setup")
    TSubclassOf<ARProjectile> ProjectileBlueprint; // see https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
 
+   //TODO remove once firing is moved to aiming component
    UPROPERTY(EditDefaultsOnly, Category = "Firing")
    float LauchSpeed = 4000.0f; // 4000 m/s
 

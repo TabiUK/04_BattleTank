@@ -13,10 +13,6 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank %s C++ BeginPlay called"), *TankName);
-
-
 	auto ControlledTank = GetControlledTank();
 	if (!ensure(ControlledTank)) return;
 	
