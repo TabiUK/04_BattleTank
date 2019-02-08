@@ -1,10 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright TABIUK Ltd.
 
 #include "TankAIController.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "Tank.h"
-
+// Depends on movement component via pathfinding system
 
 void ATankAIController::BeginPlay()
 {
@@ -19,19 +19,18 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (PlayerTank) {
-    	auto ControlledTank = Cast<ATank>(GetPawn());
-	    if (ControlledTank) {
+	if (!ensure(PlayerTank)) return;
 
-			// move towards the player
-			MoveToActor(PlayerTank, AcceptanceRadius); // todo check radius is in cm
+  	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (!ensure(ControlledTank)) return;
 
-			// Aim towards the player
-			ControlledTank->AimAt(PlayerTank->GetActorLocation());
+   // move towards the player
+	MoveToActor(PlayerTank, AcceptanceRadius); // todo check radius is in cm
 
-			// fire if ready
-			ControlledTank->Fire();
-		}
-	}
+	// Aim towards the player
+	ControlledTank->AimAt(PlayerTank->GetActorLocation());
+
+	// fire if ready
+	ControlledTank->Fire();
 }
 

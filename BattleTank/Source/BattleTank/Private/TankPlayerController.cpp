@@ -1,24 +1,29 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "Tank.h"
 
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (ControlledTank == nullptr)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No PlayerContoller controlling tank found"));
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerContoller Tank %s being controlled"), *ControlledTank->GetName());
-	}
 
-	//UE_LOG(LogTemp, Warning, TEXT("PlayerContoller Begin Play"));
+	auto TankName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank %s C++ BeginPlay called"), *TankName);
+
+
+	auto ControlledTank = GetControlledTank();
+	if (!ensure(ControlledTank)) return;
+	
+	auto AiminComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AiminComponent)) return;
+
+	FoundAimingComponent(AiminComponent);
 }
 
 
@@ -33,7 +38,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	auto ControlledTank = GetControlledTank();
-	if (ControlledTank == nullptr) return;
+	if (!ensure(ControlledTank)) return;
 
 	FVector HitLocation = FVector(.0f); // OUT Praramater;
 	if (GetSightRayHitLocation(HitLocation)) {

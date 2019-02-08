@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright TABIUK Ltd.
 
 #include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
@@ -12,6 +12,7 @@
 
 
 // Sets default values for this component's properties
+
 UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -22,9 +23,10 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 {
-	if (Barrel == nullptr || Turret == nullptr) return;
+	if (!ensure(Barrel) || !ensure(Turret)) return;
 
 	FVector OutLauchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -54,7 +56,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (Barrel == nullptr || Turret == nullptr) return;
+	if (!ensure(Barrel) || !ensure(Turret)) return;
 
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
@@ -66,13 +68,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
 	Barrel = BarrelToSet;
-}
-
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
 	Turret = TurretToSet;
 }
