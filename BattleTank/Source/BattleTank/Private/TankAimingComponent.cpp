@@ -23,10 +23,9 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-
-void UTankAimingComponent::AimAt(FVector HitLocation, float LauchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure(Barrel) || !ensure(Turret)) return;
+	if (!ensure(Barrel)) return;
 
 	FVector OutLauchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));

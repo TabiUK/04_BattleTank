@@ -1,11 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright TABIUK Ltd.
 
 #pragma once
 
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -23,4 +23,6 @@ private:
 
 	// How close can the AI tank get 
 	float AcceptanceRadius = 3000.0; // in cm
+
+	UTankAimingComponent* AiminComponent = nullptr;
 };
