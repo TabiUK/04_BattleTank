@@ -78,7 +78,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-BattleTank/Content/BattleGround.umap
 *StarterContent/
 
 *Downloads/

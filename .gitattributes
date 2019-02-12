@@ -1,0 +1,4 @@
+BattleTank/Content/Mortar/M_Metal_Rust.uasset filter=lfs diff=lfs merge=lfs -text
+BattleTank/Content/Mortar/T_MacroVariation.uasset filter=lfs diff=lfs merge=lfs -text
+BattleTank/Content/Mortar/T_Metal_Rust_D.uasset filter=lfs diff=lfs merge=lfs -text
+BattleTank/Content/Mortar/T_Metal_Rust_N.uasset filter=lfs diff=lfs merge=lfs -text
