@@ -12,7 +12,8 @@ enum class EfiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 // Forward Declarationg
@@ -41,6 +42,9 @@ public:
 	void Fire();
 
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EfiringStatus FiringStatus = EfiringStatus::Reloading;
@@ -66,6 +70,8 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+
+	int RoundsLeft = 3;
 
 	
 };
