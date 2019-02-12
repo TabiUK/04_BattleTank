@@ -32,6 +32,8 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	EfiringStatus GetFiringStatus() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
@@ -44,7 +46,11 @@ protected:
 	EfiringStatus FiringStatus = EfiringStatus::Reloading;
 
 private:	
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 	void MoveBarrelTowards(FVector AimDirection);
+	bool IsBarrelMoving() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<ARProjectile> ProjectileBlueprint; // see https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
@@ -56,6 +62,7 @@ private:
 	float ReloadTimeInSceonds = 3.0f;
 
 	double LastFireTime = 0;
+	FVector AimDirection = FVector(.0f);
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

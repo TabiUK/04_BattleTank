@@ -41,6 +41,6 @@ void ATankAIController::Tick(float DeltaTime)
 	AiminComponent->AimAt(PlayerTank->GetActorLocation());
 
 	// fire if ready
-	AiminComponent->Fire();
+	if (AiminComponent->GetFiringStatus() == EfiringStatus::Locked) AiminComponent->Fire();
 }
 
