@@ -7,6 +7,8 @@
 #include "Components/PrimitiveComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Engine/World.h"
+#include "Engine.h"
+#include "TimerManager.h"
 
 
 // Sets default values
@@ -51,8 +53,20 @@ void ARProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle InOutHandle = FTimerHandle();
+	GetWorld()->GetTimerManager().SetTimer(InOutHandle, this, &ARProjectile::OnTimerExpire, DestroyDelay, false);
 }
 
+
+void ARProjectile::OnTimerExpire()
+{
+	Destroy();
+	if (GEngine) GEngine->ForceGarbageCollection(true);
+}
 
 
 void ARProjectile::LaunchProjectile(float speed)
