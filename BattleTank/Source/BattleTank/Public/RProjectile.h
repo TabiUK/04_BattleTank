@@ -45,10 +45,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 10.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float ProjectileDamage = 10.0f;
+
 	UFUNCTION(Category = "CallBack")
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-	//UFUNCTION(Category = "CallBack")
 	void OnTimerExpire();
 	
 };
