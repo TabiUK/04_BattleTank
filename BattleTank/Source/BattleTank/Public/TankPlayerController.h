@@ -24,7 +24,7 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
-
+	virtual void SetPawn(APawn* InPawn) override;
 
 	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
@@ -34,6 +34,9 @@ private:
 	// Start the tank moving the barrel so that a shot would hit where
 	// the crosshair intersects the world
 	void AimTowardsCrosshair();
+
+	UFUNCTION(Category = "Callback")
+	void OnPossedTankDeath();
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;

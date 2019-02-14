@@ -6,6 +6,8 @@
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
+#include "Tank.h" // so we can impliment ondeath
+
 
 void ATankPlayerController::BeginPlay()
 {
@@ -94,4 +96,24 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		return true;
 	}
 	return false;
+}
+
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn == nullptr) return;
+
+	auto PossessedTank = Cast<ATank>(InPawn);
+	if (!ensure(PossessedTank)) return;
+
+	PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossedTankDeath);
+}
+
+
+void ATankPlayerController::OnPossedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Recieved"));
+	StartSpectatingOnly();
 }

@@ -25,6 +25,11 @@ protected:
 	float AcceptanceRadius = 80000.0; // in cm
 
 private:
+	virtual void SetPawn(APawn* InPawn) override;
 
 	UTankAimingComponent* AiminComponent = nullptr;
+
+
+	UFUNCTION(Category = "Callback")
+	void OnPossedTankDeath();
 };
